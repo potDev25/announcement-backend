@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AnnouncementGuestController;
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +19,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function(){
     Route::controller(AuthController::class)->group(function(){
         Route::get('/users', 'index');
+        Route::get('/users/logout', 'logout');
     });
+
+    Route::apiResource('announcements', AnnouncementController::class);
 });
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('/users/login', 'login');
+    Route::post('/users/register', 'store');
 });
+
+Route::apiResource('guests-announcements', AnnouncementGuestController::class);
